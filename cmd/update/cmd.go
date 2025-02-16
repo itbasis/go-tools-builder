@@ -19,18 +19,25 @@ func NewUpdateCommand() *cobra.Command {
 }
 
 func _run(cmd *cobra.Command, args []string) {
-	execGoMod, errGoMod := itbasisBuilderExec.NewGoModWithCobra(cmd)
+	var (
+		ctx                 = cmd.Context()
+		execGoMod, errGoMod = itbasisBuilderExec.NewGoModWithCobra(ctx, cmd)
+	)
+
 	itbasisCoreCmd.RequireNoError(cmd, errGoMod)
 	itbasisCoreCmd.RequireNoError(
-		cmd, execGoMod.Execute(
+		cmd,
+		execGoMod.Execute(
+			ctx,
 			itbasisCoreExec.WithRestoreArgsIncludePrevious(itbasisCoreExec.IncludePrevArgsBefore, "tidy"),
 		),
 	)
 
-	execGoGet, errGoGet := itbasisBuilderExec.NewGoGetWithCobra(cmd)
+	execGoGet, errGoGet := itbasisBuilderExec.NewGoGetWithCobra(ctx, cmd)
 	itbasisCoreCmd.RequireNoError(cmd, errGoGet)
 	itbasisCoreCmd.RequireNoError(
 		cmd, execGoGet.Execute(
+			ctx,
 			itbasisCoreExec.WithRestoreArgsIncludePrevious(
 				itbasisCoreExec.IncludePrevArgsBefore,
 				"-t",

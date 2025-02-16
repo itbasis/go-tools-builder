@@ -1,6 +1,8 @@
 package lint
 
 import (
+	"context"
+
 	builderCmd "github.com/itbasis/go-tools-builder/internal/cmd"
 	itbasisCoreCmd "github.com/itbasis/go-tools-core/cmd"
 	itbasisCoreExec "github.com/itbasis/go-tools-core/exec"
@@ -29,32 +31,36 @@ func NewLintCommand() *cobra.Command {
 }
 
 func _run(cmd *cobra.Command, args []string) {
-	withCobraOut := itbasisCoreExec.WithCobraOut(cmd)
+	var (
+		ctx          = cmd.Context()
+		withCobraOut = itbasisCoreExec.WithCobraOut(cmd)
+	)
 
 	if !_flagSkipEditorConfigChecker && itbasisCoreOs.BeARegularFile(".editorconfig") {
-		itbasisCoreCmd.RequireNoError(cmd, _execEditorConfigChecker(withCobraOut))
+		itbasisCoreCmd.RequireNoError(cmd, _execEditorConfigChecker(ctx, withCobraOut))
 	}
 
 	if !_flagSkipGolangCiLint {
-		itbasisCoreCmd.RequireNoError(cmd, _execGolangCiLint(builderCmd.ArgPackages(builderCmd.DefaultPackages, args), withCobraOut))
+		itbasisCoreCmd.RequireNoError(cmd, _execGolangCiLint(ctx, builderCmd.ArgPackages(builderCmd.DefaultPackages, args), withCobraOut))
 	}
 }
 
-func _execEditorConfigChecker(opts ...itbasisCoreExec.Option) error {
-	executable, err := itbasisCoreExec.NewExecutable("editorconfig-checker", opts...)
+func _execEditorConfigChecker(ctx context.Context, opts ...itbasisCoreExec.Option) error {
+	executable, err := itbasisCoreExec.NewExecutable(ctx, "editorconfig-checker", opts...)
 	if err != nil {
 		return errors.Wrap(err, itbasisCoreExec.ErrFailedExecuteCommand.Error())
 	}
 
-	if err := executable.Execute(); err != nil {
+	if err := executable.Execute(ctx); err != nil {
 		return errors.Wrap(err, itbasisCoreExec.ErrFailedExecuteCommand.Error())
 	}
 
 	return nil
 }
 
-func _execGolangCiLint(lintPackages string, opts ...itbasisCoreExec.Option) error {
+func _execGolangCiLint(ctx context.Context, lintPackages string, opts ...itbasisCoreExec.Option) error {
 	executable, err := itbasisCoreExec.NewExecutable(
+		ctx,
 		"golangci-lint",
 		append(
 			[]itbasisCoreExec.Option{itbasisCoreExec.WithArgs("run", lintPackages)},
@@ -65,5 +71,5 @@ func _execGolangCiLint(lintPackages string, opts ...itbasisCoreExec.Option) erro
 		return errors.Wrap(err, itbasisCoreExec.ErrFailedExecuteCommand.Error())
 	}
 
-	return errors.Wrap(executable.Execute(), itbasisCoreExec.ErrFailedExecuteCommand.Error())
+	return errors.Wrap(executable.Execute(ctx), itbasisCoreExec.ErrFailedExecuteCommand.Error())
 }

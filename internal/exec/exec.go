@@ -1,57 +1,66 @@
 package exec
 
 import (
+	"context"
+
 	itbasisCoreExec "github.com/itbasis/go-tools-core/exec"
 )
 
-func NewGoExecutable(opts ...itbasisCoreExec.Option) (*itbasisCoreExec.Executable, error) {
-	return itbasisCoreExec.NewExecutable("go", opts...) //nolint:wrapcheck // TODO
+func NewGoExecutable(ctx context.Context, opts ...itbasisCoreExec.Option) (*itbasisCoreExec.Executable, error) {
+	return itbasisCoreExec.NewExecutable(ctx, "go", opts...) //nolint:wrapcheck // TODO
 }
 
-func NewGoInstallWithCobra(cobraOut itbasisCoreExec.CobraOut) (*itbasisCoreExec.Executable, error) {
+func NewGoInstallWithCobra(ctx context.Context, cobraOut itbasisCoreExec.CobraOut) (*itbasisCoreExec.Executable, error) {
 	return NewGoExecutable(
+		ctx,
 		itbasisCoreExec.WithArgs("install"),
 		itbasisCoreExec.WithCobraOut(cobraOut),
 	)
 }
 
-func NewGoGetWithCobra(cobraOut itbasisCoreExec.CobraOut) (*itbasisCoreExec.Executable, error) {
+func NewGoGetWithCobra(ctx context.Context, cobraOut itbasisCoreExec.CobraOut) (*itbasisCoreExec.Executable, error) {
 	return NewGoExecutable(
+		ctx,
 		itbasisCoreExec.WithArgs("get"),
 		itbasisCoreExec.WithCobraOut(cobraOut),
 	)
 }
 
-func NewGoModWithCobra(cobraOut itbasisCoreExec.CobraOut) (*itbasisCoreExec.Executable, error) {
+func NewGoModWithCobra(ctx context.Context, cobraOut itbasisCoreExec.CobraOut) (*itbasisCoreExec.Executable, error) {
 	return NewGoExecutable(
+		ctx,
 		itbasisCoreExec.WithArgs("mod"),
 		itbasisCoreExec.WithCobraOut(cobraOut),
 	)
 }
 
-func NewGoToolWithCobra(cobraOut itbasisCoreExec.CobraOut) (*itbasisCoreExec.Executable, error) {
+func NewGoToolWithCobra(ctx context.Context, cobraOut itbasisCoreExec.CobraOut) (*itbasisCoreExec.Executable, error) {
 	return NewGoExecutable(
+		ctx,
 		itbasisCoreExec.WithArgs("tool"),
 		itbasisCoreExec.WithCobraOut(cobraOut),
 	)
 }
 
-func NewGoGenerateWithCobra(cobraOut itbasisCoreExec.CobraOut) (*itbasisCoreExec.Executable, error) {
+func NewGoGenerateWithCobra(ctx context.Context, cobraOut itbasisCoreExec.CobraOut) (*itbasisCoreExec.Executable, error) {
 	return NewGoExecutable(
+		ctx,
 		itbasisCoreExec.WithArgs("generate"),
 		itbasisCoreExec.WithCobraOut(cobraOut),
 	)
 }
 
-func NewGoBuildWithCobra(cobraOut itbasisCoreExec.CobraOut) (*itbasisCoreExec.Executable, error) {
+func NewGoBuildWithCobra(ctx context.Context, cobraOut itbasisCoreExec.CobraOut) (*itbasisCoreExec.Executable, error) {
 	return NewGoExecutable(
+		ctx,
 		itbasisCoreExec.WithArgs("build"),
 		itbasisCoreExec.WithCobraOut(cobraOut),
 	)
 }
 
-func NewGoRunWithCobra(cobraOut itbasisCoreExec.CobraOut) (*itbasisCoreExec.Executable, error) {
+func NewGoRunWithCobra(ctx context.Context, cobraOut itbasisCoreExec.CobraOut) (*itbasisCoreExec.Executable, error) {
 	return NewGoExecutable(
+		ctx,
 		itbasisCoreExec.WithArgs("run"),
 		itbasisCoreExec.WithCobraOut(cobraOut),
 	)

@@ -18,10 +18,16 @@ func NewGenerateCommand() *cobra.Command {
 }
 
 func _run(cmd *cobra.Command, args []string) {
-	execGoGenerate, err := itbasisBuilderExec.NewGoGenerateWithCobra(cmd)
+	var (
+		ctx                 = cmd.Context()
+		execGoGenerate, err = itbasisBuilderExec.NewGoGenerateWithCobra(ctx, cmd)
+	)
+
 	itbasisCoreCmd.RequireNoError(cmd, err)
 	itbasisCoreCmd.RequireNoError(
-		cmd, execGoGenerate.Execute(
+		cmd,
+		execGoGenerate.Execute(
+			ctx,
 			itbasisCoreExec.WithRestoreArgsIncludePrevious(
 				itbasisCoreExec.IncludePrevArgsBefore,
 				builderCmd.ArgPackages(builderCmd.DefaultPackages, args),

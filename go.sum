@@ -31,8 +31,10 @@ github.com/inconshreveable/mousetrap v1.1.0 h1:wN+x4NVGpMsO7ErUn/mUI3vEoE6Jt13X2
 github.com/inconshreveable/mousetrap v1.1.0/go.mod h1:vpF70FUmC8bwa3OWnCshd2FqLfsEA9PFc4w1p2J65bw=
 github.com/itbasis/go-test-utils/v5 v5.0.2 h1:MYMUcwv2g802OWb9iNSB83OqnFwsEty9AHV0F9yg6r4=
 github.com/itbasis/go-test-utils/v5 v5.0.2/go.mod h1:eknXXI9K1lJ9vBESfN6zXEPfIunACNYSPScofsOSlOE=
-github.com/itbasis/go-tools-core v0.0.0-20250216061144-b089f06f489d h1:nXdtHzJ8c//qmkMruQCCisJKkjnHKqjowTndEd1g1rg=
-github.com/itbasis/go-tools-core v0.0.0-20250216061144-b089f06f489d/go.mod h1:UTRddJAHG9lrcXH2y4P1fKAO6gG4d78hkAT9eTAh+I4=
+github.com/itbasis/go-tools-core v0.0.0-20250216172451-62769f17db42 h1:Uen8tEnCcVSdwukU+7JJikf22h3VWfjz8/AXWT585SI=
+github.com/itbasis/go-tools-core v0.0.0-20250216172451-62769f17db42/go.mod h1:UTRddJAHG9lrcXH2y4P1fKAO6gG4d78hkAT9eTAh+I4=
+github.com/itbasis/go-tools-core v0.0.0-20250216173203-1aa6b01698c0 h1:+YXqAfkltqpgtjdSnVIvTWfFpX3WP5cKllkm8292RZ8=
+github.com/itbasis/go-tools-core v0.0.0-20250216173203-1aa6b01698c0/go.mod h1:UTRddJAHG9lrcXH2y4P1fKAO6gG4d78hkAT9eTAh+I4=
 github.com/kr/pretty v0.3.1 h1:flRD4NNwYAUpkphVc1HcthR4KEIFJ65n8Mw5qdRn3LE=
 github.com/kr/pretty v0.3.1/go.mod h1:hoEshYVHaxMs3cyo3Yncou5ZscifuDolrwPKZanG3xk=
 github.com/kr/text v0.2.0 h1:5Nx0Ya0ZqY2ygV366QzturHI13Jq95ApcVaJBhpS+AY=

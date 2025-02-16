@@ -1,6 +1,7 @@
 package golang
 
 import (
+	"context"
 	"fmt"
 	"log/slog"
 
@@ -13,7 +14,7 @@ import (
 const ProviderGoKey model.ProviderKey = "go"
 
 type GoInstaller interface {
-	Install(list model.GoDependencyList) error
+	Install(ctx context.Context, list model.GoDependencyList) error
 }
 
 var GoInstallEmpty = (GoInstaller)(nil)
@@ -22,8 +23,8 @@ type installer struct {
 	exec *itbasisCoreExec.Executable
 }
 
-func NewGoInstaller(out itbasisCoreExec.CobraOut) (GoInstaller, error) {
-	var exec, err = itbasisBuilderExec.NewGoInstallWithCobra(out)
+func NewGoInstaller(ctx context.Context, out itbasisCoreExec.CobraOut) (GoInstaller, error) {
+	var exec, err = itbasisBuilderExec.NewGoInstallWithCobra(ctx, out)
 	if err != nil {
 		return GoInstallEmpty, err //nolint:wrapcheck // TODO
 	}
@@ -33,11 +34,12 @@ func NewGoInstaller(out itbasisCoreExec.CobraOut) (GoInstaller, error) {
 	}, nil
 }
 
-func (r *installer) Install(list model.GoDependencyList) error {
+func (r *installer) Install(ctx context.Context, list model.GoDependencyList) error {
 	for name, dependency := range list {
 		slog.Info(fmt.Sprintf("install dependency: %s[%s]", name, dependency.Version))
 
 		if err := r.exec.Execute(
+			ctx,
 			itbasisCoreExec.WithRerun(),
 			itbasisCoreExec.WithRestoreArgsIncludePrevious(
 				itbasisCoreExec.IncludePrevArgsBefore,

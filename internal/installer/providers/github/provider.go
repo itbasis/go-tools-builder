@@ -15,7 +15,7 @@ import (
 const ProviderGithubKey model.ProviderKey = "github"
 
 type Installer interface {
-	Install(list model.GithubDependencyList) error
+	Install(ctx context.Context, list model.GithubDependencyList) error
 }
 
 var InstallerEmpty = (Installer)(nil)
@@ -30,7 +30,7 @@ func NewGithubInstaller() (Installer, error) {
 	}, nil
 }
 
-func (r *installer) Install(list model.GithubDependencyList) error {
+func (r *installer) Install(_ context.Context, list model.GithubDependencyList) error {
 	for name, dependency := range list {
 		if err := r.installDependency(name, dependency); err != nil {
 			return err

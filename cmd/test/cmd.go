@@ -65,12 +65,16 @@ func _run(cmd *cobra.Command, args []string) {
 	itbasisCoreCmd.RequireNoError(cmd, moveJunitReport(junitReportOut, path.Join(reportDir, junitReportOut)))
 	itbasisCoreCmd.RequireNoError(cmd, moveAndFilterCoverage(ginkgoCoverUnitOut, path.Join(reportDir, ginkgoCoverUnitOut)))
 
-	var goToolCoverExec, err = itbasisBuilderExec.NewGoToolWithCobra(cmd)
+	var (
+		ctx                  = cmd.Context()
+		goToolCoverExec, err = itbasisBuilderExec.NewGoToolWithCobra(ctx, cmd)
+	)
 
 	itbasisCoreCmd.RequireNoError(cmd, err)
 	itbasisCoreCmd.RequireNoError(
 		cmd,
 		goToolCoverExec.Execute(
+			ctx,
 			itbasisCoreExec.WithRerun(),
 			itbasisCoreExec.WithRestoreArgsIncludePrevious(
 				itbasisCoreExec.IncludePrevArgsBefore,
@@ -83,6 +87,7 @@ func _run(cmd *cobra.Command, args []string) {
 	itbasisCoreCmd.RequireNoError(
 		cmd,
 		goToolCoverExec.Execute(
+			ctx,
 			itbasisCoreExec.WithRerun(),
 			itbasisCoreExec.WithRestoreArgsIncludePrevious(
 				itbasisCoreExec.IncludePrevArgsBefore,

@@ -58,8 +58,12 @@ func _runE(cmd *cobra.Command, _ []string) error {
 		optionDependencies = builderInstaller.WithJSONData(_defaultDependencies)
 	}
 
-	installer, errInstaller := builderInstaller.NewInstaller(cmd, optionDependencies)
+	var (
+		ctx                     = cmd.Context()
+		installer, errInstaller = builderInstaller.NewInstaller(ctx, cmd, optionDependencies)
+	)
+
 	itbasisCoreCmd.RequireNoError(cmd, errInstaller)
 
-	return installer.Install(nil) //nolint:wrapcheck // TODO
+	return installer.Install(ctx) //nolint:wrapcheck // TODO
 }

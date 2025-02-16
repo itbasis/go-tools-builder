@@ -2,16 +2,18 @@ package main_test
 
 // tag::documentation[]
 import (
+	"context"
+
 	"github.com/itbasis/go-tools-builder/cmd"
 )
 
 // If arguments were not passed, they are taken from the `os.Args`.
 func SnippetRunWithoutArguments() {
-	cmd.InitApp().Run()
+	cmd.InitApp(context.Background()).Run()
 }
 
 func SnippetRunWithArguments() {
-	cmd.InitApp().Run("generate", "--debug")
+	cmd.InitApp(context.Background()).Run("generate", "--debug")
 }
 
 // end::documentation[]

@@ -43,6 +43,7 @@ func NewBuildCommand() *cobra.Command {
 
 func _run(cmd *cobra.Command, args []string) {
 	var (
+		ctx            = cmd.Context()
 		versionPkgPath = reflect.TypeFor[itbasisCoreVersion.Version]().PkgPath() + ".version"
 		buildArgs      = []string{
 			`-trimpath`,
@@ -62,11 +63,12 @@ func _run(cmd *cobra.Command, args []string) {
 
 	slog.Debug("build with arguments", itbasisCoreLog.SlogAttrSliceWithSeparator("buildArgs", " ", buildArgs))
 
-	execGoBuild, errGoBuild := itbasisBuilderExec.NewGoBuildWithCobra(cmd)
+	execGoBuild, errGoBuild := itbasisBuilderExec.NewGoBuildWithCobra(ctx, cmd)
 	itbasisCoreCmd.RequireNoError(cmd, errGoBuild)
 	itbasisCoreCmd.RequireNoError(
 		cmd,
 		execGoBuild.Execute(
+			ctx,
 			itbasisCoreExec.WithRestoreEnv(
 				itbasisCoreEnv.MergeEnvs(
 					os.Environ(),

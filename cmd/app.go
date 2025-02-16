@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"context"
 	"log"
 
 	builderCmdBuild "github.com/itbasis/go-tools-builder/cmd/build"
@@ -13,8 +14,8 @@ import (
 	itbasisCoreCmd "github.com/itbasis/go-tools-core/cmd"
 )
 
-func InitApp() *itbasisCoreApp.App {
-	var cmdRoot, err = itbasisCoreCmd.InitDefaultCmdRoot("itbasis-builder")
+func InitApp(ctx context.Context) *itbasisCoreApp.App {
+	var cmdRoot, err = itbasisCoreCmd.InitDefaultCmdRoot(ctx, "itbasis-builder")
 	if err != nil {
 		log.Fatal(err)
 	}

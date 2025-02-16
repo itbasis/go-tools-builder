@@ -1,6 +1,7 @@
 package installer
 
 import (
+	"context"
 	"encoding/json"
 	"log/slog"
 	"os"
@@ -25,8 +26,8 @@ type _optionDependencies struct {
 	dependencies model.Dependencies
 }
 
-func (r _optionDependencies) Key() itbasisCoreOption.Key { return _optionDependenciesKey }
-func (r _optionDependencies) Apply(obj *Installer) error {
+func (r *_optionDependencies) Key() itbasisCoreOption.Key { return _optionDependenciesKey }
+func (r *_optionDependencies) Apply(_ context.Context, obj *Installer) error {
 	var err error
 
 	if len(r.filePath) > 0 {

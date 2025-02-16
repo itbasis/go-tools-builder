@@ -1,6 +1,7 @@
 package installer
 
 import (
+	"context"
 	"log/slog"
 
 	"github.com/itbasis/go-tools-builder/internal/installer/model"
@@ -8,7 +9,6 @@ import (
 	"github.com/itbasis/go-tools-builder/internal/installer/providers/golang"
 	itbasisCoreExec "github.com/itbasis/go-tools-core/exec"
 	itbasisCoreOption "github.com/itbasis/go-tools-core/option"
-	"golang.org/x/mod/module"
 )
 
 type Installer struct {
@@ -19,28 +19,28 @@ type Installer struct {
 	providers map[model.ProviderKey]any
 }
 
-func NewInstaller(cobraOut itbasisCoreExec.CobraOut, opts ...Option) (*Installer, error) {
+func NewInstaller(ctx context.Context, cobraOut itbasisCoreExec.CobraOut, opts ...Option) (*Installer, error) {
 	installer := &Installer{
 		cobraOut:  cobraOut,
 		providers: map[model.ProviderKey]any{},
 	}
 
-	if err := itbasisCoreOption.ApplyOptions(installer, opts, nil); err != nil {
+	if err := itbasisCoreOption.ApplyOptions(ctx, installer, opts, nil); err != nil {
 		return nil, err //nolint:wrapcheck // TODO
 	}
 
 	return installer, nil
 }
 
-func (r *Installer) Install(map[model.DependencyName]module.Version) error {
+func (r *Installer) Install(ctx context.Context) error {
 	if len(r.dependencies.Go) > 0 {
-		if err := r.installGo(); err != nil {
+		if err := r.installGo(ctx); err != nil {
 			return err
 		}
 	}
 
 	if len(r.dependencies.Github) > 0 {
-		if err := r.installGitHub(); err != nil {
+		if err := r.installGitHub(ctx); err != nil {
 			return err
 		}
 	}
@@ -48,14 +48,14 @@ func (r *Installer) Install(map[model.DependencyName]module.Version) error {
 	return nil
 }
 
-func (r *Installer) installGo() error {
+func (r *Installer) installGo(ctx context.Context) error {
 	var (
 		err       error
 		installer golang.GoInstaller
 	)
 
 	if value, exist := r.providers[golang.ProviderGoKey]; !exist {
-		installer, err = golang.NewGoInstaller(r.cobraOut)
+		installer, err = golang.NewGoInstaller(ctx, r.cobraOut)
 		if err != nil {
 			return err //nolint:wrapcheck // TODO
 		}
@@ -67,14 +67,14 @@ func (r *Installer) installGo() error {
 
 	slog.Info("installing dependencies with provider: " + string(golang.ProviderGoKey))
 
-	if err = installer.Install(r.dependencies.Go); err != nil {
+	if err = installer.Install(ctx, r.dependencies.Go); err != nil {
 		return err //nolint:wrapcheck // TODO
 	}
 
 	return nil
 }
 
-func (r *Installer) installGitHub() error {
+func (r *Installer) installGitHub(ctx context.Context) error {
 	var (
 		err       error
 		installer github.Installer
@@ -93,7 +93,7 @@ func (r *Installer) installGitHub() error {
 
 	slog.Info("installing dependencies with provider: " + string(github.ProviderGithubKey))
 
-	if err = installer.Install(r.dependencies.Github); err != nil {
+	if err = installer.Install(ctx, r.dependencies.Github); err != nil {
 		return err //nolint:wrapcheck // TODO
 	}
 
