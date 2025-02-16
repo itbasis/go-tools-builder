@@ -6,6 +6,7 @@
 
 == Возможность запуска в сторонних проектах
 
+link:main_snippet_test.go[source code]:
 [source,go]
 ----
 include::main_snippet_test.go[tag=documentation]
