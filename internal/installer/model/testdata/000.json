@@ -1,0 +1,15 @@
+{
+	"go": {
+		"mockgen": {
+			"path": "go.uber.org/mock/mockgen",
+			"version": "latest"
+		}
+	},
+	"github": {
+		"golangci-lint": {
+			"owner": "golangci",
+			"repo": "golangci-lint",
+			"version": "latest"
+		}
+	}
+}
