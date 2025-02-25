@@ -2,6 +2,7 @@ package lint
 
 import (
 	"context"
+	"os"
 
 	builderCmd "github.com/itbasis/go-tools-builder/internal/cmd"
 	itbasisCoreCmd "github.com/itbasis/go-tools-core/cmd"
@@ -32,16 +33,25 @@ func NewLintCommand() *cobra.Command {
 
 func _run(cmd *cobra.Command, args []string) {
 	var (
-		ctx          = cmd.Context()
+		ctx = cmd.Context()
+		pwd = itbasisCoreOs.Pwd()
+
+		withWorkDir  = itbasisCoreExec.WithWorkDir(pwd)
 		withCobraOut = itbasisCoreExec.WithCobraOut(cmd)
 	)
 
-	if !_flagSkipEditorConfigChecker && itbasisCoreOs.BeARegularFile(".editorconfig") {
-		itbasisCoreCmd.RequireNoError(cmd, _execEditorConfigChecker(ctx, withCobraOut))
+	if !_flagSkipEditorConfigChecker && itbasisCoreOs.BeARegularFile(os.DirFS(pwd), ".editorconfig") {
+		itbasisCoreCmd.RequireNoError(
+			cmd,
+			_execEditorConfigChecker(ctx, withCobraOut, withWorkDir),
+		)
 	}
 
 	if !_flagSkipGolangCiLint {
-		itbasisCoreCmd.RequireNoError(cmd, _execGolangCiLint(ctx, builderCmd.ArgPackages(builderCmd.DefaultPackages, args), withCobraOut))
+		itbasisCoreCmd.RequireNoError(
+			cmd,
+			_execGolangCiLint(ctx, builderCmd.ArgPackages(builderCmd.DefaultPackages, args), withCobraOut, withWorkDir),
+		)
 	}
 }
 

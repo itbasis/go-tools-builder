@@ -30,9 +30,9 @@ func NewGithubInstaller() (Installer, error) {
 	}, nil
 }
 
-func (r *installer) Install(_ context.Context, list model.GithubDependencyList) error {
+func (r *installer) Install(ctx context.Context, list model.GithubDependencyList) error {
 	for name, dependency := range list {
-		if err := r.installDependency(name, dependency); err != nil {
+		if err := r.installDependency(ctx, name, dependency); err != nil {
 			return err
 		}
 	}
@@ -40,7 +40,7 @@ func (r *installer) Install(_ context.Context, list model.GithubDependencyList) 
 	return nil
 }
 
-func (r *installer) installDependency(name model.DependencyName, dependency model.GithubDependency) error {
+func (r *installer) installDependency(ctx context.Context, name model.DependencyName, dependency model.GithubDependency) error {
 	slog.Info(fmt.Sprintf("install dependency: %s[%s]", name, dependency.Version))
 
 	var (
@@ -50,10 +50,10 @@ func (r *installer) installDependency(name model.DependencyName, dependency mode
 
 	switch dependency.Version {
 	case model.VersionLatest:
-		githubRelease, _, errGetRepository = r.githubClient.Repositories.GetLatestRelease(context.Background(), dependency.Owner, dependency.Repo)
+		githubRelease, _, errGetRepository = r.githubClient.Repositories.GetLatestRelease(ctx, dependency.Owner, dependency.Repo)
 
 	default:
-		githubRelease, _, errGetRepository = r.githubClient.Repositories.GetLatestRelease(context.Background(), dependency.Owner, dependency.Repo)
+		githubRelease, _, errGetRepository = r.githubClient.Repositories.GetLatestRelease(ctx, dependency.Owner, dependency.Repo)
 	}
 
 	if errGetRepository != nil {
