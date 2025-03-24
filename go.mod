@@ -6,7 +6,7 @@ require (
 	github.com/google/go-github/v68 v68.0.0
 	github.com/itbasis/go-test-utils/v5 v5.0.2
 	github.com/itbasis/go-tools-core v0.0.0-20250224185331-bbe651f3382c
-	github.com/onsi/ginkgo/v2 v2.22.2
+	github.com/onsi/ginkgo/v2 v2.23.3
 	github.com/onsi/gomega v1.36.2
 	github.com/pkg/errors v0.9.1
 	github.com/spf13/cobra v1.9.1
