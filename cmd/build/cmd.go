@@ -30,7 +30,7 @@ func NewBuildCommand() *cobra.Command {
 		Short:  "Building an application for the current platform",
 		Args:   cobra.MatchAll(cobra.OnlyValidArgs, cobra.MaximumNArgs(1)),
 		PreRun: itbasisCoreCmd.LogCommand,
-		Run:    _run,
+		Run:    _runBuild,
 	}
 
 	cmd.Flags().StringVarP(&_flagOutput, "output", "", "", "")
@@ -41,7 +41,7 @@ func NewBuildCommand() *cobra.Command {
 	return cmd
 }
 
-func _run(cmd *cobra.Command, args []string) {
+func _runBuild(cmd *cobra.Command, args []string) {
 	var (
 		ctx            = cmd.Context()
 		versionPkgPath = reflect.TypeFor[itbasisCoreVersion.Version]().PkgPath() + ".version"

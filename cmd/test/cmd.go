@@ -35,11 +35,11 @@ func NewUnitTestCommand() *cobra.Command {
 		Use:    itbasisCoreCmd.BuildUse("unit-test", builderCmd.UseArgPackages),
 		Args:   cobra.MatchAll(cobra.OnlyValidArgs, cobra.MaximumNArgs(1)),
 		PreRun: itbasisCoreCmd.LogCommand,
-		Run:    _run,
+		Run:    _runUnitTest,
 	}
 }
 
-func _run(cmd *cobra.Command, args []string) {
+func _runUnitTest(cmd *cobra.Command, args []string) {
 	itbasisCoreCmd.RequireNoError(cmd, os.MkdirAll(reportDir, 0755))
 
 	(&ginkgoCommand.Program{

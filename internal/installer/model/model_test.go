@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"path"
 
-	itbasisTestUtilsFiles "github.com/itbasis/go-test-utils/v5/files"
+	itbasisTestUtilsOs "github.com/itbasis/go-test-utils/v6/os"
 	"github.com/itbasis/go-tools-builder/internal/installer/model"
 	"github.com/onsi/ginkgo/v2"
 	"github.com/onsi/gomega"
@@ -21,7 +21,7 @@ var _ = ginkgo.Describe(
 
 		gomega.Expect(
 			json.Unmarshal(
-				itbasisTestUtilsFiles.ReadFile(vfs.OS("testdata"), "000.json"),
+				itbasisTestUtilsOs.ReadFile(vfs.OS("testdata"), "000.json"),
 				&dependencies,
 			),
 		).To(gomega.Succeed())
@@ -63,7 +63,7 @@ var _ = ginkgo.Describe(
 		var dependencies model.Dependencies
 		gomega.Expect(
 			json.Unmarshal(
-				itbasisTestUtilsFiles.ReadFile(
+				itbasisTestUtilsOs.ReadFile(
 					vfs.OS(path.Join("..", "..", "..", "cmd", "dependencies")),
 					"dependencies.json",
 				),

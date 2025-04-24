@@ -1,114 +1,120 @@
-#file: noinspection SpellCheckingInspection
+version: "2"
 run:
-    concurrency: 4
-    modules-download-mode: readonly
-
-issues:
-    exclude-dirs:
-        - testdata
-    exclude-rules:
-        -   path: _snippet_test.go
-            linters:
-                - unused
-
-
-linters-settings:
-    gosec:
-        exclude-generated: true
-        severity: medium
-        confidence: medium
-    varnamelen:
-        ignore-type-assert-ok: true
-        ignore-map-index-ok: true
-        ignore-names:
-            - db
-            - err
-            - id
-            - os
-    ginkgolinter:
-        force-expect-to: true
-        validate-async-intervals: true
-    govet:
-        enable-all: true
-        disable:
-            - fieldalignment
-    nolintlint:
-        require-explanation: true
-        require-specific: true
-    lll:
-        line-length: 150
-    mnd:
-        ignored-numbers:
-            - '0755'
-        ignored-functions:
-            - '^cobra\.RangeArgs$'
-            - '^cobra\.MaximumNArgs$'
-            - '^cobra\.MinimumNArgs$'
-    tagliatelle:
-        case:
-            rules:
-                json: snake
-    wsl:
-        strict-append: false
-        force-case-trailing-whitespace: 1
-
-# https://golangci-lint.run/usage/configuration/#linters-configuration
+  concurrency: 4
+  modules-download-mode: readonly
 linters:
-    disable-all: true
-    enable:
-        #    - unused
-        - asasalint
-        - bodyclose
-        - containedctx
-        - contextcheck
-        - copyloopvar
-        - cyclop
-        - dogsled
-        - err113
-        - errcheck
-        - errname
-        - errorlint
-        - exhaustive
-        - forbidigo
-        - funlen
-        - ginkgolinter
-        #    - gochecknoinits
-        - goconst
-        - gocritic
-        - gocyclo
-        - goimports
-        - gomoddirectives
-        - goprintffuncname
-        - gosec
-        - gosimple
-        - govet
-        - grouper
-        - ineffassign
-        - interfacebloat
-        - lll
-        - misspell
-        - mnd
-        - nilerr
-        - nlreturn
-        - noctx
-        - nolintlint
-        - nonamedreturns
-        - prealloc
-        - predeclared
-        - promlinter
-        - revive
-        - staticcheck
-        - stylecheck
-        - tagliatelle
-        #        - tenv
-        - testpackage
-        - typecheck
-        - unconvert
-        - unparam
-        - usetesting
-        - usestdlibvars
-        - varnamelen
-        - wastedassign
-        - whitespace
-        - wrapcheck
-        - wsl
+  default: none
+  enable:
+    - asasalint
+    - bodyclose
+    - containedctx
+    - contextcheck
+    - copyloopvar
+    - cyclop
+    - dogsled
+    - err113
+    - errcheck
+    - errname
+    - errorlint
+    - exhaustive
+    - forbidigo
+    - funlen
+    - ginkgolinter
+    - goconst
+    - gocritic
+    - gocyclo
+    - gomoddirectives
+    - goprintffuncname
+    - gosec
+    - govet
+    - grouper
+    - ineffassign
+    - interfacebloat
+    - lll
+    - misspell
+    - mnd
+    - nilerr
+    - nlreturn
+    - noctx
+    - nolintlint
+    - nonamedreturns
+    - prealloc
+    - predeclared
+    - promlinter
+    - revive
+    - staticcheck
+    - tagliatelle
+    - testpackage
+    - unconvert
+    - unparam
+    - usestdlibvars
+    - usetesting
+    - varnamelen
+    - wastedassign
+    - whitespace
+    - wrapcheck
+    - wsl
+  settings:
+    ginkgolinter:
+      force-expect-to: true
+      validate-async-intervals: true
+    gosec:
+      severity: medium
+      confidence: medium
+    govet:
+      disable:
+        - fieldalignment
+      enable-all: true
+    lll:
+      line-length: 150
+    mnd:
+      ignored-numbers:
+        - "0755"
+      ignored-functions:
+        - ^cobra\.RangeArgs$
+        - ^cobra\.MaximumNArgs$
+        - ^cobra\.MinimumNArgs$
+    nolintlint:
+      require-explanation: true
+      require-specific: true
+    tagliatelle:
+      case:
+        rules:
+          json: snake
+    varnamelen:
+      ignore-names:
+        - db
+        - err
+        - id
+        - os
+      ignore-type-assert-ok: true
+      ignore-map-index-ok: true
+    wsl:
+      strict-append: false
+      force-case-trailing-whitespace: 1
+  exclusions:
+    generated: lax
+    presets:
+      - comments
+      - common-false-positives
+      - legacy
+      - std-error-handling
+    rules:
+      - linters:
+          - unused
+        path: _snippet_test.go
+    paths:
+      - testdata
+      - third_party$
+      - builtin$
+      - examples$
+formatters:
+  enable:
+    - goimports
+  exclusions:
+    generated: lax
+    paths:
+      - testdata
+      - third_party$
+      - builtin$
+      - examples$

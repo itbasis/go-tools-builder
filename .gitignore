@@ -14,8 +14,12 @@ tmp.*
 ginkgo-coverage-*.out
 junit-report.xml
 
+# VSCode
+.vscode/
+
 # JetBrains
 .idea/*
 !.idea/vcs.xml
 !.idea/protobuf.xml
 !.idea/externalDependencies.xml
+.qodo
