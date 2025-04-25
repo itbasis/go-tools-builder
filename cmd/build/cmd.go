@@ -9,6 +9,7 @@ import (
 
 	builderCmd "github.com/itbasis/go-tools-builder/internal/cmd"
 	itbasisBuilderExec "github.com/itbasis/go-tools-builder/internal/exec"
+	itbasisBuilderOs "github.com/itbasis/go-tools-builder/internal/os"
 	itbasisCoreCmd "github.com/itbasis/go-tools-core/cmd"
 	itbasisCoreEnv "github.com/itbasis/go-tools-core/env"
 	itbasisCoreExec "github.com/itbasis/go-tools-core/exec"
@@ -56,7 +57,7 @@ func _runBuild(cmd *cobra.Command, args []string) {
 	if _flagOutput != "" {
 		buildArgs = append(buildArgs, "-o", _flagOutput)
 
-		itbasisCoreCmd.RequireNoError(cmd, os.MkdirAll(filepath.Dir(_flagOutput), os.ModePerm))
+		itbasisCoreCmd.RequireNoError(cmd, os.MkdirAll(filepath.Dir(_flagOutput), itbasisBuilderOs.DefaultPermDir))
 	}
 
 	buildArgs = append(buildArgs, args[0])

@@ -10,14 +10,13 @@ import (
 )
 
 const (
-	DefaultTimeout = 5 * time.Second
+	DefaultDownloadTimeout = 1 * time.Minute
 
 	maxRedirect = 10
 )
 
-func NewHTTPClient(timeout time.Duration) *http.Client {
+func NewHTTPClient() *http.Client {
 	return &http.Client{
-		Timeout: timeout,
 		CheckRedirect: func(req *http.Request, via []*http.Request) error {
 			slog.Debug(fmt.Sprintf("'%s' redirect to '%s'...", via[0].URL, req.URL))
 

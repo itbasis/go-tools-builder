@@ -6,10 +6,12 @@ import (
 	"log/slog"
 	"os"
 	"path"
+	"path/filepath"
 	"strings"
 
 	builderCmd "github.com/itbasis/go-tools-builder/internal/cmd"
 	itbasisBuilderExec "github.com/itbasis/go-tools-builder/internal/exec"
+	itbasisBuilderOs "github.com/itbasis/go-tools-builder/internal/os"
 	itbasisCoreCmd "github.com/itbasis/go-tools-core/cmd"
 	itbasisCoreExec "github.com/itbasis/go-tools-core/exec"
 	itbasisCoreLog "github.com/itbasis/go-tools-core/log"
@@ -40,7 +42,7 @@ func NewUnitTestCommand() *cobra.Command {
 }
 
 func _runUnitTest(cmd *cobra.Command, args []string) {
-	itbasisCoreCmd.RequireNoError(cmd, os.MkdirAll(reportDir, 0755))
+	itbasisCoreCmd.RequireNoError(cmd, os.MkdirAll(reportDir, itbasisBuilderOs.DefaultPermDir))
 
 	(&ginkgoCommand.Program{
 		OutWriter:      cmd.OutOrStdout(),
@@ -112,7 +114,7 @@ func moveJunitReport(source, target string) error {
 func moveAndFilterCoverage(source, target string) error {
 	slog.Debug("filtering and moving coverage", slog.String("source", source), slog.String("target", target))
 
-	var sourceFile, errOpenFile = os.Open(source)
+	var sourceFile, errOpenFile = os.Open(filepath.Clean(source))
 	if errOpenFile != nil {
 		return errors.Wrap(errOpenFile, ErrMoveFile.Error())
 	}
@@ -123,7 +125,7 @@ func moveAndFilterCoverage(source, target string) error {
 		}
 	}()
 
-	var targetFile, errCreateFile = os.Create(target)
+	var targetFile, errCreateFile = os.Create(filepath.Clean(target))
 	if errCreateFile != nil {
 		return errors.Wrap(errCreateFile, ErrMoveFile.Error())
 	}

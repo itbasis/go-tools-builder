@@ -49,7 +49,7 @@ func NewGithubInstaller() (Installer, error) {
 
 	return &installer{
 		githubClient: github.NewClient(nil),
-		httpClient:   itbasisBuilderHttp.NewHTTPClient(itbasisBuilderHttp.DefaultTimeout),
+		httpClient:   itbasisBuilderHttp.NewHTTPClient(),
 		binPath:      binPath,
 	}, nil
 }
@@ -82,7 +82,7 @@ func (r *installer) installDependency(ctx context.Context, name model.Dependency
 		_ = os.RemoveAll(tmpFile.Name())
 	}()
 
-	if err := r.downloadAsset(ghAsset, tmpFile); err != nil {
+	if err := r.downloadAsset(ctx, ghAsset, tmpFile); err != nil {
 		return err
 	}
 
@@ -149,14 +149,24 @@ func (r *installer) filterAssets(assets []*github.ReleaseAsset) []*github.Releas
 	return foundAssets
 }
 
-func (r *installer) downloadAsset(asset *github.ReleaseAsset, outFile *os.File) error {
-	var assetURL = asset.BrowserDownloadURL
+func (r *installer) downloadAsset(ctx context.Context, asset *github.ReleaseAsset, outFile *os.File) error {
+	var (
+		getCtx, cancel = context.WithTimeout(ctx, itbasisBuilderHttp.DefaultDownloadTimeout)
+		assetURL       = asset.GetBrowserDownloadURL()
+	)
 
-	slog.Info(fmt.Sprintf("downloading '%s'...", *assetURL))
+	defer cancel()
 
-	resp, errResp := r.httpClient.Get(*assetURL)
+	slog.Info(fmt.Sprintf("downloading '%s'...", assetURL))
+
+	req, errReq := http.NewRequestWithContext(getCtx, http.MethodGet, assetURL, nil)
+	if errReq != nil {
+		return errors.WithMessagef(errReq, "fail create request from url: %s", assetURL)
+	}
+
+	resp, errResp := r.httpClient.Do(req)
 	if errResp != nil {
-		return errors.WithMessagef(errResp, "fail download: %s", *assetURL)
+		return errors.WithMessagef(errResp, "fail download '%s'", assetURL)
 	}
 
 	defer func() {
@@ -164,7 +174,7 @@ func (r *installer) downloadAsset(asset *github.ReleaseAsset, outFile *os.File) 
 	}()
 
 	if _, err := io.Copy(outFile, resp.Body); err != nil {
-		return errors.WithMessagef(err, "fail save downloaded file: %s", *assetURL)
+		return errors.WithMessagef(err, "fail save downloaded file: %s", assetURL)
 	}
 
 	return nil
@@ -205,7 +215,7 @@ func (r *installer) extractAsset(name model.DependencyName, tmpFile *os.File) er
 			to, _ := syscall.UTF16PtrFromString(targetPath)
 
 			_ = os.Remove(targetPath)
-			
+
 			return syscall.MoveFile(from, to)
 		} else {
 			return os.Rename(path, targetPath)
