@@ -15,8 +15,6 @@ import (
 	itbasisCoreCmd "github.com/itbasis/go-tools-core/cmd"
 	itbasisCoreExec "github.com/itbasis/go-tools-core/exec"
 	itbasisCoreLog "github.com/itbasis/go-tools-core/log"
-	ginkgoCommand "github.com/onsi/ginkgo/v2/ginkgo/command"
-	ginkgoRun "github.com/onsi/ginkgo/v2/ginkgo/run"
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
 )
@@ -44,35 +42,32 @@ func NewUnitTestCommand() *cobra.Command {
 func _runUnitTest(cmd *cobra.Command, args []string) {
 	itbasisCoreCmd.RequireNoError(cmd, os.MkdirAll(reportDir, itbasisBuilderOs.DefaultPermDir))
 
-	(&ginkgoCommand.Program{
-		OutWriter:      cmd.OutOrStdout(),
-		ErrWriter:      cmd.ErrOrStderr(),
-		DefaultCommand: ginkgoRun.BuildRunCommand(),
-		Exiter: func(code int) {
-			slog.Debug(fmt.Sprintf("Ginkgo exit code: %d", code))
+	var (
+		ctx                        = cmd.Context()
+		goToolCoverExec, errGoTool = itbasisBuilderExec.NewGoToolWithCobra(ctx, cmd)
+	)
 
-			if code != 0 {
-				os.Exit(code)
-			}
-		},
-	}).RunAndExit(
-		[]string{
-			"-race",
-			"--cover", `--coverprofile=` + ginkgoCoverUnitOut,
-			`--junit-report=` + junitReportOut,
-			builderCmd.ArgPackages(builderCmd.DefaultPackages, args),
-		},
+	itbasisCoreCmd.RequireNoError(cmd, errGoTool)
+
+	itbasisCoreCmd.RequireNoError(
+		cmd,
+		goToolCoverExec.Execute(
+			ctx,
+			itbasisCoreExec.WithRerun(),
+			itbasisCoreExec.WithRestoreArgsIncludePrevious(
+				itbasisCoreExec.IncludePrevArgsBefore,
+				"ginkgo",
+				"-race",
+				"--cover", `--coverprofile=`+ginkgoCoverUnitOut,
+				`--junit-report=`+junitReportOut,
+				builderCmd.ArgPackages(builderCmd.DefaultPackages, args),
+			),
+		),
 	)
 
 	itbasisCoreCmd.RequireNoError(cmd, moveJunitReport(junitReportOut, path.Join(reportDir, junitReportOut)))
 	itbasisCoreCmd.RequireNoError(cmd, moveAndFilterCoverage(ginkgoCoverUnitOut, path.Join(reportDir, ginkgoCoverUnitOut)))
 
-	var (
-		ctx                  = cmd.Context()
-		goToolCoverExec, err = itbasisBuilderExec.NewGoToolWithCobra(ctx, cmd)
-	)
-
-	itbasisCoreCmd.RequireNoError(cmd, err)
 	itbasisCoreCmd.RequireNoError(
 		cmd,
 		goToolCoverExec.Execute(

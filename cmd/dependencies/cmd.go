@@ -4,8 +4,10 @@ import (
 	_ "embed"
 	"log/slog"
 
+	itbasisBuilderExec "github.com/itbasis/go-tools-builder/internal/exec"
 	builderInstaller "github.com/itbasis/go-tools-builder/internal/installer"
 	itbasisCoreCmd "github.com/itbasis/go-tools-core/cmd"
+	itbasisCoreExec "github.com/itbasis/go-tools-core/exec"
 	"github.com/spf13/cobra"
 )
 
@@ -43,9 +45,8 @@ func NewDependenciesCommand() *cobra.Command {
 func _runE(cmd *cobra.Command, _ []string) error {
 	if _flagShow {
 		_, err := cmd.OutOrStdout().Write(_defaultDependencies)
-		if err != nil {
-			return err //nolint:wrapcheck // TODO
-		}
+
+		return err //nolint:wrapcheck // TODO
 	}
 
 	var optionDependencies builderInstaller.Option
@@ -61,9 +62,16 @@ func _runE(cmd *cobra.Command, _ []string) error {
 	var (
 		ctx                     = cmd.Context()
 		installer, errInstaller = builderInstaller.NewInstaller(ctx, cmd, optionDependencies)
+		goModTidy, errGoMod     = itbasisBuilderExec.NewGoModWithCobra(ctx, cmd)
 	)
 
 	itbasisCoreCmd.RequireNoError(cmd, errInstaller)
+	itbasisCoreCmd.RequireNoError(cmd, errGoMod)
 
-	return installer.Install(ctx) //nolint:wrapcheck // TODO
+	itbasisCoreCmd.RequireNoError(cmd, installer.Install(ctx))
+	itbasisCoreCmd.RequireNoError(cmd, goModTidy.Execute(ctx,
+		itbasisCoreExec.WithRestoreArgsIncludePrevious(itbasisCoreExec.IncludePrevArgsBefore, "tidy"),
+	))
+
+	return nil
 }

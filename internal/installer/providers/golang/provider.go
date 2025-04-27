@@ -24,7 +24,7 @@ type installer struct {
 }
 
 func NewGoInstaller(ctx context.Context, out itbasisCoreExec.CobraOut) (GoInstaller, error) {
-	var exec, err = itbasisBuilderExec.NewGoInstallWithCobra(ctx, out)
+	var exec, err = itbasisBuilderExec.NewGoGetWithCobra(ctx, out)
 	if err != nil {
 		return GoInstallEmpty, err //nolint:wrapcheck // TODO
 	}
@@ -43,6 +43,7 @@ func (r *installer) Install(ctx context.Context, list model.GoDependencyList) er
 			itbasisCoreExec.WithRerun(),
 			itbasisCoreExec.WithRestoreArgsIncludePrevious(
 				itbasisCoreExec.IncludePrevArgsBefore,
+				"-tool",
 				dependency.String(),
 			),
 		); err != nil {
