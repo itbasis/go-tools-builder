@@ -4,7 +4,7 @@ go 1.24.0
 
 require (
 	github.com/google/go-github/v68 v68.0.0
-	github.com/itbasis/go-test-utils/v6 v6.0.1
+	github.com/itbasis/go-test-utils/v6 v6.0.2
 	github.com/itbasis/go-tools-core v0.2.0
 	github.com/onsi/ginkgo/v2 v2.23.4
 	github.com/onsi/gomega v1.37.0
