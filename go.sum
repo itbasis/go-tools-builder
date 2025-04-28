@@ -122,10 +122,10 @@ github.com/hashicorp/golang-lru/v2 v2.0.7/go.mod h1:QeFd9opnmA6QUJc5vARoKUSoFhyf
 github.com/ianlancetaylor/demangle v0.0.0-20181102032728-5e5cf60278f6/go.mod h1:aSSvb/t6k1mPoxDqO4vJh6VOCGPwU4O0C2/Eqndh1Sc=
 github.com/inconshreveable/mousetrap v1.1.0 h1:wN+x4NVGpMsO7ErUn/mUI3vEoE6Jt13X2s0bqwp9tc8=
 github.com/inconshreveable/mousetrap v1.1.0/go.mod h1:vpF70FUmC8bwa3OWnCshd2FqLfsEA9PFc4w1p2J65bw=
-github.com/itbasis/go-test-utils/v6 v6.0.1 h1:HOcvplOvp6EPwv/P97OJIHGFemCscu9aVQRZ/0oU+gU=
-github.com/itbasis/go-test-utils/v6 v6.0.1/go.mod h1:N0upQYGkZ1TK7eXFz5XNq+woHtRtiC/vft9isb3xZwY=
-github.com/itbasis/go-tools-core v0.2.0 h1:K8e3IAnIok1G3RgduK34gDkXfDN0gA7dN46qN9/9HLg=
-github.com/itbasis/go-tools-core v0.2.0/go.mod h1:HUjXo6xh+10LC6p0mjKUTTiov5G1dJ2Llckc9VhNVaI=
+github.com/itbasis/go-test-utils/v6 v6.0.2 h1:tl9YmdRQnWa8cnLP7ozBvVIsHCKdKSd+/54KBqB799M=
+github.com/itbasis/go-test-utils/v6 v6.0.2/go.mod h1:9XkXmaCk/s6l/O7B5qFgmqIpT/+eEvSDfKghpv0sbtU=
+github.com/itbasis/go-tools-core v0.2.2 h1:hib6zrBArYIdDZzHlQDkOYQ9Ymrk7/sgRj8fA+l1dtw=
+github.com/itbasis/go-tools-core v0.2.2/go.mod h1:Gr4T08hYL0kMcnMg413bf7Gd7CqN1L/kUW4qcjLWGSI=
 github.com/jstemmer/go-junit-report v0.0.0-20190106144839-af01ea7f8024/go.mod h1:6v2b51hI/fHJwM22ozAgKL4VKDeJcHhJFhtBdhmNjmU=
 github.com/jstemmer/go-junit-report v0.9.1/go.mod h1:Brl9GWCQeLvo8nXZwPNNblvFj/XSXhF0NWZEnDohbsk=
 github.com/kdomanski/iso9660 v0.4.0 h1:BPKKdcINz3m0MdjIMwS0wx1nofsOjxOq8TOr45WGHFg=
@@ -374,8 +374,8 @@ google.golang.org/genproto v0.0.0-20191115194625-c23dd37a84c9/go.mod h1:n3cpQtvx
 google.golang.org/genproto v0.0.0-20191216164720-4f79533eabd1/go.mod h1:n3cpQtvxv34hfy77yVDNjmbRyujviMdxYliBSkLhpCc=
 google.golang.org/genproto v0.0.0-20191230161307-f3c370f40bfb/go.mod h1:n3cpQtvxv34hfy77yVDNjmbRyujviMdxYliBSkLhpCc=
 google.golang.org/genproto v0.0.0-20200212174721-66ed5ce911ce/go.mod h1:55QSHmfGQM9UVYDPBsyGGes0y52j32PQ3BqQfXhyH3c=
-google.golang.org/genproto/googleapis/rpc v0.0.0-20250422160041-2d3770c4ea7f h1:N/PrbTw4kdkqNRzVfWPrBekzLuarFREcbFOiOLkXon4=
-google.golang.org/genproto/googleapis/rpc v0.0.0-20250422160041-2d3770c4ea7f/go.mod h1:qQ0YXyHHx3XkvlzUtpXDkS29lDSafHMZBAZDc03LQ3A=
+google.golang.org/genproto/googleapis/rpc v0.0.0-20250425173222-7b384671a197 h1:29cjnHVylHwTzH66WfFZqgSQgnxzvWE+jvBwpZCLRxY=
+google.golang.org/genproto/googleapis/rpc v0.0.0-20250425173222-7b384671a197/go.mod h1:qQ0YXyHHx3XkvlzUtpXDkS29lDSafHMZBAZDc03LQ3A=
 google.golang.org/grpc v1.19.0/go.mod h1:mqu4LbDTu4XGKhr4mRzUsmM4RtVoemTSY81AxZiDr8c=
 google.golang.org/grpc v1.20.1/go.mod h1:10oTOabMzJvdu6/UiuZezV6QK5dSlG84ov/aaiqXj38=
 google.golang.org/grpc v1.21.1/go.mod h1:oYelfM1adQP15Ek0mdvEgi9Df8B9CZIaU1084ijfRaM=

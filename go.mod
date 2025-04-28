@@ -4,8 +4,8 @@ go 1.24.0
 
 require (
 	github.com/google/go-github/v68 v68.0.0
-	github.com/itbasis/go-test-utils/v6 v6.0.1
-	github.com/itbasis/go-tools-core v0.2.0
+	github.com/itbasis/go-test-utils/v6 v6.0.2
+	github.com/itbasis/go-tools-core v0.2.2
 	github.com/onsi/ginkgo/v2 v2.23.4
 	github.com/onsi/gomega v1.37.0
 	github.com/pkg/errors v0.9.1
@@ -56,7 +56,7 @@ require (
 	golang.org/x/sync v0.13.0 // indirect
 	golang.org/x/sys v0.32.0 // indirect
 	golang.org/x/text v0.24.0 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20250422160041-2d3770c4ea7f // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20250425173222-7b384671a197 // indirect
 	google.golang.org/grpc v1.72.0 // indirect
 	google.golang.org/protobuf v1.36.6 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
