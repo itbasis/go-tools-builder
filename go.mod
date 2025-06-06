@@ -10,7 +10,7 @@ require (
 	github.com/onsi/gomega v1.37.0
 	github.com/pkg/errors v0.9.1
 	github.com/spf13/cobra v1.9.1
-	golang.org/x/mod v0.24.0
+	golang.org/x/mod v0.25.0
 	golang.org/x/tools v0.32.0
 	golift.io/xtractr v0.2.3-0.20250419171821-f69a7b0361b2
 )
