@@ -119,8 +119,6 @@ github.com/inconshreveable/mousetrap v1.1.0 h1:wN+x4NVGpMsO7ErUn/mUI3vEoE6Jt13X2
 github.com/inconshreveable/mousetrap v1.1.0/go.mod h1:vpF70FUmC8bwa3OWnCshd2FqLfsEA9PFc4w1p2J65bw=
 github.com/itbasis/go-test-utils/v6 v6.0.3 h1:rxXn3+6kzKGGZd3C/GkeYQ4bpYKbPzjmR9EMiYOdb/o=
 github.com/itbasis/go-test-utils/v6 v6.0.3/go.mod h1:5rKFkZW3vuzHOcpoVxW6UIAOw83rglFuD2iz150hN4w=
-github.com/itbasis/go-tools-core v0.2.3 h1:e2yEYwEaaNwWZXKrcKjWUY1gm3H/l9b5+idVyT9GbnY=
-github.com/itbasis/go-tools-core v0.2.3/go.mod h1:orS4VwWQt/KRF7tfswDviGJ8PnrYdxblfzTzJ4bzrlg=
 github.com/itbasis/go-tools-core v0.2.4 h1:nOqMRFgv1VYJlVmmCpZ52mF8wQlQZyf5sHkNEKTwN3w=
 github.com/itbasis/go-tools-core v0.2.4/go.mod h1:MU4pl/qDpG5XyZt364565xV+8TKCb2VDpmOjfMR4qzA=
 github.com/jstemmer/go-junit-report v0.0.0-20190106144839-af01ea7f8024/go.mod h1:6v2b51hI/fHJwM22ozAgKL4VKDeJcHhJFhtBdhmNjmU=
@@ -143,8 +141,8 @@ github.com/nwaples/rardecode v1.1.3 h1:cWCaZwfM5H7nAD6PyEdcVnczzV8i/JtotnyW/dD9l
 github.com/nwaples/rardecode v1.1.3/go.mod h1:5DzqNKiOdpKKBH87u8VlvAnPZMXcGRhxWkRpHbbfGS0=
 github.com/onsi/ginkgo/v2 v2.23.4 h1:ktYTpKJAVZnDT4VjxSbiBenUjmlL/5QkBEocaWXiQus=
 github.com/onsi/ginkgo/v2 v2.23.4/go.mod h1:Bt66ApGPBFzHyR+JO10Zbt0Gsp4uWxu5mIOTusL46e8=
-github.com/onsi/gomega v1.37.0 h1:CdEG8g0S133B4OswTDC/5XPSzE1OeP29QOioj2PID2Y=
-github.com/onsi/gomega v1.37.0/go.mod h1:8D9+Txp43QWKhM24yyOBEdpkzN8FvJyAwecBgsU4KU0=
+github.com/onsi/gomega v1.38.0 h1:c/WX+w8SLAinvuKKQFh77WEucCnPk4j2OTUr7lt7BeY=
+github.com/onsi/gomega v1.38.0/go.mod h1:OcXcwId0b9QsE7Y49u+BTrL4IdKOBOKnD6VQNTJEB6o=
 github.com/peterebden/ar v0.0.0-20241106141004-20dc11b778e8 h1:27L3dHkYbeWGU3/5NasAzVDgXG9QzlfKCvcl4cdNW6c=
 github.com/peterebden/ar v0.0.0-20241106141004-20dc11b778e8/go.mod h1:hpFkyhCgB5Rm8FK+ISypOE+9UyrCuL6MNcjPMB1s1ec=
 github.com/pierrec/lz4/v4 v4.1.22 h1:cKFw6uJDK+/gfw5BcDL0JL5aBsAFdsIT18eRtLj7VIU=
